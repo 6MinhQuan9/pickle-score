@@ -104,3 +104,61 @@ export async function getPlayerById(id: string): Promise<Player | null> {
   if (error) throw error;
   return data;
 }
+
+export async function getMatchDetail(id: string): Promise<Match | null> {
+  const { data, error } = await supabase
+    .from("matches")
+    .select(
+      `
+      *,
+      teams!teams_match_id_fkey (
+        id,
+        player1:players!teams_player1_id_fkey (id, username, avatar_url),
+        player2:players!teams_player2_id_fkey (id, username, avatar_url),
+        scores (
+          set_number,
+          score
+        )
+      )
+    `
+    )
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error("Error fetching match detail:", error);
+    return null;
+  }
+
+  const match = data as DatabaseMatch;
+  const [team1, team2] = match.teams;
+
+  const team1SetsWon = team1.scores.filter((s1) => {
+    const team2Score = team2.scores.find(
+      (s2) => s2.set_number === s1.set_number
+    );
+    return s1.score > (team2Score?.score || 0);
+  }).length;
+
+  const team2SetsWon = team2.scores.filter((s1) => {
+    const team1Score = team1.scores.find(
+      (s2) => s2.set_number === s1.set_number
+    );
+    return s1.score > (team1Score?.score || 0);
+  }).length;
+
+  return {
+    id: match.id,
+    match_type: match.match_type,
+    match_date: formatDateTime(match.match_date),
+    location: match.location ?? undefined,
+    players: {
+      team1: [team1.player1, ...(team1.player2 ? [team1.player2] : [])],
+      team2: [team2.player1, ...(team2.player2 ? [team2.player2] : [])],
+    },
+    score: {
+      team1: team1SetsWon,
+      team2: team2SetsWon,
+    },
+  };
+}

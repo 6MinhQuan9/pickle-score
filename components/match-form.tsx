@@ -57,7 +57,7 @@ export function MatchForm({ players }: MatchFormProps) {
   const [team2Player1, setTeam2Player1] = useState<string>("");
   const [team2Player2, setTeam2Player2] = useState<string>("");
   const [sets, setSets] = useState<
-    Array<{ team1Score: number; team2Score: number }>
+    Array<{ team1Score: number | undefined; team2Score: number | undefined }>
   >([{ team1Score: 0, team2Score: 0 }]);
   const { toast } = useToast();
 

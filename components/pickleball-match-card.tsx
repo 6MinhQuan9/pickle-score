@@ -1,7 +1,10 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn, formatDate } from "@/lib/utils";
 import { Match, Player } from "@/types";
+import { useRouter } from "next/navigation";
 
 interface PickleballMatchCardProps {
   match: Match;
@@ -9,14 +12,19 @@ interface PickleballMatchCardProps {
 
 export function PickleballMatchCard({ match }: PickleballMatchCardProps) {
   console.log(match);
+  const router = useRouter();
   const { players, match_date } = match;
   const team1Won = match.score.team1 > match.score.team2;
   const team2Won = match.score.team2 > match.score.team1;
 
+  const handleCardClick = () => {
+    router.push(`/match-detail/${match.id}`);
+  };
+
   return (
-    <Card className="w-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+    <Card className="w-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
       <CardContent className="p-5">
-        <div className="flex items-stretch justify-between">
+        <div className="flex items-stretch justify-between" onClick={handleCardClick}>
           <TeamSection players={players.team1} isWinner={team1Won} />
 
           <div className="flex flex-col items-center justify-center w-1/3">

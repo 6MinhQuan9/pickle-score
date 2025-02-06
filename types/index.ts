@@ -17,6 +17,9 @@ export interface Player {
     matchesPlayed: number;
   };
   lastGames: MatchResult[];
+  date_of_birth?: string| number | Date;
+  level: "Beginner" | "Intermediate" | "Advanced";
+  gender: "Male" | "Female";
 }
 
 export interface Score {
