@@ -12,7 +12,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronDown, Plus, Minus, Trash2 } from "lucide-react";
+import { ChevronDown, Plus, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Player } from "@/types";
 import { PlayerCombobox } from "./player-combobox";
@@ -48,7 +48,7 @@ export interface MatchFormData {
   }>;
 }
 
-export function MatchForm({ players, onSubmit }: MatchFormProps) {
+export function MatchForm({ players }: MatchFormProps) {
   const router = useRouter();
   const [matchType, setMatchType] = useState<"Singles" | "Doubles">("Singles");
   const [matchDate, setMatchDate] = useState<Date>(new Date());

@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
+interface SetData {
+  team1Score: number;
+  team2Score: number;
+}
+
 export async function POST(request: Request) {
   try {
     const data = await request.json();
@@ -52,15 +57,15 @@ export async function POST(request: Request) {
     }
 
     // Create scores for each set with explicit match_id
-    const scores = data.sets.flatMap((set: any, index: number) => [
+    const scores = data.sets.flatMap((set: SetData, index: number) => [
       {
-        match_id: match.id, // Add match_id here
+        match_id: match.id,
         team_id: teams[0].id,
         set_number: index + 1,
         score: set.team1Score,
       },
       {
-        match_id: match.id, // Add match_id here
+        match_id: match.id,
         team_id: teams[1].id,
         set_number: index + 1,
         score: set.team2Score,
