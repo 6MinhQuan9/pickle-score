@@ -1,37 +1,54 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { MatchForm, MatchFormData } from '@/components/match-form'
-import { Player } from '@/types'
-import { getPlayers } from '@/lib/db'
+import { useEffect, useState } from "react";
+import { MatchForm, MatchFormData } from "@/components/match-form";
+import { Player } from "@/types";
+import { getPlayers } from "@/lib/db";
+import { useRouter } from "next/navigation";
 
 export default function NewMatchPage() {
-  const [players, setPlayers] = useState<Player[]>([])
+  const [players, setPlayers] = useState<Player[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const loadPlayers = async () => {
-      const players = await getPlayers()
-      setPlayers(players)
-    }
-    loadPlayers()
-  }, [])
+      const players = await getPlayers();
+      setPlayers(players);
+    };
+    loadPlayers();
+  }, []);
 
   const handleSubmit = async (data: MatchFormData) => {
-    const response = await fetch('/api/matches', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
+    try {
+      const response = await fetch("/api/matches", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    if (!response.ok) {
-      throw new Error('Failed to save match')
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("API Error Response:", {
+          status: response.status,
+          statusText: response.statusText,
+          body: errorText,
+        });
+        // Show a more user-friendly error
+        alert("Failed to save match. Please try again later.");
+        return;
+      }
+
+      const result = await response.json();
+      console.log("Success:", result);
+      router.push("/matches");
+    } catch (error) {
+      console.error("Error details:", error);
+      // Show a more user-friendly error
+      alert("Error saving match. Please check your connection and try again.");
     }
-
-    // Redirect to matches list
-    window.location.href = '/matches'
-  }
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -47,5 +64,5 @@ export default function NewMatchPage() {
         </div>
       </div>
     </div>
-  )
-} 
+  );
+}
