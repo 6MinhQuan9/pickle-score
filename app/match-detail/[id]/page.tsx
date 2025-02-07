@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getMatchDetail } from "@/lib/db";
 import { MatchDetails } from "@/components/match-details";
 import { MatchStats } from "@/components/match-stats";
+import LoadingScreen from "@/components/loading-screen";
 
 export default function MatchDetail() {
   const { id } = useParams();
@@ -25,7 +26,7 @@ export default function MatchDetail() {
   }, [id]);
 
   if (!match) {
-    return <div>Loading...</div>;
+    return <LoadingScreen />;
   }
 
   return (
