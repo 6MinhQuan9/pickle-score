@@ -13,6 +13,8 @@ interface PlayerStatistics {
   win_rate: number;
   matches_played: number;
   last_games: { type: "win" | "loss" | "draw" }[];
+  level: "Beginner" | "Intermediate" | "Advanced";
+  gender: "Male" | "Female";
 }
 
 export async function getPlayers(): Promise<Player[]> {
@@ -35,6 +37,8 @@ export async function getPlayers(): Promise<Player[]> {
       matchesPlayed: stat.matches_played,
     },
     lastGames: stat.last_games || [],
+    level: stat.level,
+    gender: stat.gender,
   }));
 }
 
