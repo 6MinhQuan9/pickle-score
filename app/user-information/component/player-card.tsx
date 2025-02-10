@@ -21,13 +21,13 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto bg-[#0a1929] rounded-lg shadow-xl overflow-hidden">
+    <div className="w-full max-w-6xl mx-auto bg-black rounded-lg shadow-xl overflow-hidden border-white border-b">
       {/* Header */}
-      <div className="p-6 flex items-center justify-between border-b border-white/10">
+      <div className="p-6 flex items-center justify-between border-b border-white">
         <div className="flex items-center space-x-4">
           <button
             onClick={handleBackClick}
-            className="text-white bg-[rgb(0,144,255)] px-3 py-1 rounded"
+            className="text-white bg-black px-3 py-1 rounded"
           >
             Back
           </button>

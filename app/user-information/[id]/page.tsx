@@ -32,7 +32,7 @@ const playerData = {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-900 p-8">
+    <main className="min-h-screen bg-black p-8">
       <PlayerCard player={playerData} />
     </main>
   );
