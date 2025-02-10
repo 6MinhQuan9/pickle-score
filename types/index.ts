@@ -17,7 +17,7 @@ export interface Player {
     matchesPlayed: number;
   };
   lastGames: MatchResult[];
-  date_of_birth?: string| number | Date;
+  date_of_birth?: string | number | Date;
   level: "Beginner" | "Intermediate" | "Advanced";
   gender: "Male" | "Female";
 }
@@ -56,4 +56,38 @@ export interface Match {
     team1: number;
     team2: number;
   };
+}
+
+export interface PlayerStats {
+  serve: number;
+  forehand: number;
+  backhand: number;
+  volley: number;
+  movement: number;
+  mental: number;
+  fitness: number;
+}
+
+export interface PlayerSkills {
+  firstServePercentage: number;
+  returnGamesWon: number;
+  breakPointsSaved: number;
+  winPercentage: number;
+}
+
+export interface PlayerInfo {
+  id: string;
+  name: string;
+  position: string; // e.g., "RIGHT-HANDED / ONE-HANDED BACKHAND"
+  bio: string;
+  dateOfBirth: string;
+  placeOfBirth: string;
+  height: string;
+  image: string;
+  ranking: {
+    current: number;
+    highest: number;
+  };
+  stats: PlayerStats;
+  skills: PlayerSkills;
 }
