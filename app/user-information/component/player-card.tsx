@@ -1,37 +1,52 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import Image from "next/image"
-import { Trophy } from "lucide-react"
-import RadarChart from "./radar-chart"
-import ProgressBar from "./progress-bar"
-import { PlayerInfo } from "@/types"
+import type React from "react";
+import Image from "next/image";
+import { Trophy } from "lucide-react";
+import RadarChart from "./radar-chart";
+import ProgressBar from "./progress-bar";
+import { PlayerInfo } from "@/types";
+import { useRouter } from "next/navigation";
 
 interface PlayerCardProps {
-  player: PlayerInfo
+  player: PlayerInfo;
 }
 
 const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
-  const [selectedYear, setSelectedYear] = useState<2014 | 2015 | 2016>(2016)
+  // const [selectedYear, setSelectedYear] = useState<2014 | 2015 | 2016>(2016);
+  const router = useRouter();
+
+  const handleBackClick = () => {
+    router.back();
+  };
 
   return (
     <div className="w-full max-w-6xl mx-auto bg-[#0a1929] rounded-lg shadow-xl overflow-hidden">
       {/* Header */}
       <div className="p-6 flex items-center justify-between border-b border-white/10">
         <div className="flex items-center space-x-4">
-          {[2016, 2015, 2014].map((year) => (
+          <button
+            onClick={handleBackClick}
+            className="text-white bg-[rgb(0,144,255)] px-3 py-1 rounded"
+          >
+            Back
+          </button>
+          {/* {[2016, 2015, 2014].map((year) => (
             <button
               key={year}
               onClick={() => setSelectedYear(year as 2014 | 2015 | 2016)}
               className={`
                 w-6 h-6 rounded-full flex items-center justify-center
-                ${selectedYear === year ? "bg-[rgb(0,144,255)]" : "border border-white/30"}
+                ${
+                  selectedYear === year
+                    ? "bg-[rgb(0,144,255)]"
+                    : "border border-white/30"
+                }
               `}
             >
               <span className="text-xs text-white">{year}</span>
             </button>
-          ))}
+          ))} */}
         </div>
         <div className="relative">
           <select className="bg-transparent text-white border border-white/30 rounded px-3 py-1 text-sm">
@@ -88,10 +103,22 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
         <div className="space-y-8">
           <RadarChart stats={player.stats} />
           <div className="space-y-4">
-            <ProgressBar label="FIRST SERVE" value={player.skills.firstServePercentage} />
-            <ProgressBar label="RETURN GAMES WON" value={player.skills.returnGamesWon} />
-            <ProgressBar label="BREAK POINTS SAVED" value={player.skills.breakPointsSaved} />
-            <ProgressBar label="WIN PERCENTAGE" value={player.skills.winPercentage} />
+            <ProgressBar
+              label="FIRST SERVE"
+              value={player.skills.firstServePercentage}
+            />
+            <ProgressBar
+              label="RETURN GAMES WON"
+              value={player.skills.returnGamesWon}
+            />
+            <ProgressBar
+              label="BREAK POINTS SAVED"
+              value={player.skills.breakPointsSaved}
+            />
+            <ProgressBar
+              label="WIN PERCENTAGE"
+              value={player.skills.winPercentage}
+            />
           </div>
         </div>
       </div>
@@ -102,11 +129,16 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
           <Trophy className="w-5 h-5 text-[rgb(0,144,255)]" />
           <span className="text-white text-sm">Grand Slam Titles: 20</span>
         </div>
-        <Image src="/placeholder.svg?height=30&width=60" alt="ATP Tour" width={60} height={30} className="opacity-50" />
+        <Image
+          src="/placeholder.svg?height=30&width=60"
+          alt="ATP Tour"
+          width={60}
+          height={30}
+          className="opacity-50"
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PlayerCard
-
+export default PlayerCard;

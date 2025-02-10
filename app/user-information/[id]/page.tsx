@@ -1,4 +1,4 @@
-import PlayerCard from "./component/player-card";
+import PlayerCard from "../component/player-card";
 
 const playerData = {
   id: "1",

@@ -35,11 +35,11 @@ const LoadingScreen = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-green-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-8 text-green-800">
+      <div className="text-center flex flex-direction flex-col items-center">
+        <h1 className="text-4xl font-bold mb-8 text-black-800">
           Loading Pickleball Game...
         </h1>
-        <div className="relative w-80 h-48 bg-green-500 rounded-lg overflow-hidden">
+        <div className="relative w-80 h-48 bg-black rounded-lg overflow-hidden">
           {/* Pickleball court */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-72 h-40 border-2 border-white rounded"></div>
@@ -98,7 +98,7 @@ const LoadingScreen = () => {
             className="absolute w-3 h-3 bg-yellow-400 rounded-full animate-pickleball"
           ></div>
         </div>
-        <p className="mt-4 text-green-700">Get ready to play!</p>
+        <p className="mt-4 text-black-700">Get ready to play!</p>
       </div>
       <style jsx>{`
         @keyframes pickleball-game {

@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Check, Minus, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Player, MatchResult } from "@/types";
+import { useRouter } from "next/navigation";
 
 interface PlayerRankingsProps {
   players: Player[];
@@ -41,6 +42,12 @@ export function PlayerRankings({
   onPlayerSelect,
   selectedPlayer,
 }: PlayerRankingsProps) {
+  const router = useRouter();
+
+  const handleAvatarClick = (e: React.MouseEvent, playerId: string) => {
+    e.stopPropagation();
+    router.push(`/user-information/${playerId}`);
+  };
   return (
     <div className="w-full">
       <table className="w-full">
@@ -80,6 +87,9 @@ export function PlayerRankings({
                     "ring-2 ring-muted ring-offset-1",
                     "hover:scale-110 hover:z-10"
                   )}
+                  onClick={(e) => {
+                    handleAvatarClick(e, player.id);
+                  }}
                 >
                   <AvatarImage
                     src={`/${player.avatarUrl}`}
